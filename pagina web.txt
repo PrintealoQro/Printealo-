@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printealo QRO.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 1.5rem;
+        }
+        .section {
+            display: none;
+        }
+        .active-section {
+            display: block;
+        }
+        .btn-primary {
+            @apply bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-700 transition duration-300 ease-in-out;
+        }
+        .btn-secondary {
+            @apply bg-gray-200 text-gray-800 font-semibold py-2 px-6 rounded-full shadow-md hover:bg-gray-300 transition duration-300 ease-in-out;
+        }
+        .card {
+            @apply bg-white p-6 rounded-xl shadow-lg border border-gray-100;
+        }
+        .step-inactive { @apply text-gray-400; }
+        .step-active { @apply text-blue-600 font-bold; }
+        .step-completed { @apply text-green-600 font-bold; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container flex flex-col sm:flex-row items-center justify-between py-4">
+            <a href="#" class="flex items-center space-x-2 text-xl font-bold text-gray-900" onclick="showSection('home')">
+                <img src="https://placehold.co/100x100/A855F7/ffffff?text=Logo" alt="Logo de Printealo QRO" class="h-8 w-8 rounded-full mr-2">
+                Printealo QRO.
+            </a>
+            <div class="mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 font-medium text-sm md:text-base">
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('home')">Inicio</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('gallery')">Productos</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('quote')">Cotización</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('catalogs-main')">Catálogos</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('personalization-help')">Ayuda de Personalización</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('tracking')">Seguimiento</a>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="showSection('cart')">
+                    <i class="fas fa-shopping-cart mr-1"></i> Carrito (<span id="cart-count">0</span>)
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-8">
+
+        <!-- Home Section -->
+        <section id="home" class="section active-section">
+            <div class="card p-8 text-center">
+                <img src="https://placehold.co/200x200/A855F7/ffffff?text=Logo" alt="Logo principal de Printealo QRO" class="h-24 w-auto mx-auto mb-4">
+                <h1 class="text-4xl font-bold mb-4">Bienvenidos a Printealo QRO.</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Transformamos tus ideas en productos tangibles de alta calidad. Desde tazas personalizadas hasta artículos corporativos, te ofrecemos la mejor solución en impresión y personalización.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="btn-primary" onclick="showSection('gallery')">Ver Productos</button>
+                    <button class="btn-secondary" onclick="showSection('quote')">Solicitar Cotización</button>
+                </div>
+            </div>
+
+            <!-- Section with new values -->
+            <div class="mt-8 p-8 bg-white rounded-xl shadow-lg border border-gray-100">
+                <h2 class="text-3xl font-bold mb-8 text-center">Nuestros Valores</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/100x100/3498db/ffffff?text=Empatía" alt="Icono de Empatía" class="w-24 h-24 mb-4 rounded-full">
+                        <h3 class="font-semibold text-xl mb-2">Empatía</h3>
+                        <p class="text-gray-600">
+                            Nos ponemos en tu lugar para entender tus necesidades y superar tus expectativas con cada pedido.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/100x100/2ecc71/ffffff?text=Autenticidad" alt="Icono de Autenticidad" class="w-24 h-24 mb-4 rounded-full">
+                        <h3 class="font-semibold text-xl mb-2">Autenticidad</h3>
+                        <p class="text-gray-600">
+                            Valoramos la originalidad y la creatividad, asegurando que cada producto refleje tu esencia única.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/100x100/9b59b6/ffffff?text=Sensibilidad" alt="Icono de Sensibilidad" class="w-24 h-24 mb-4 rounded-full">
+                        <h3 class="font-semibold text-xl mb-2">Sensibilidad</h3>
+                        <p class="text-gray-600">
+                            Prestamos atención a los detalles para que tus ideas se plasmen con precisión y delicadeza.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/100x100/e67e22/ffffff?text=Equidad" alt="Icono de Equidad" class="w-24 h-24 mb-4 rounded-full">
+                        <h3 class="font-semibold text-xl mb-2">Equidad</h3>
+                        <p class="text-gray-600">
+                            Te ofrecemos un trato justo y precios transparentes para que todos tengan acceso a productos de calidad.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/100x100/e74c3c/ffffff?text=Estética" alt="Icono de Estética" class="w-24 h-24 mb-4 rounded-full">
+                        <h3 class="font-semibold text-xl mb-2">Estética</h3>
+                        <p class="text-gray-600">
+                            Nos enfocamos en crear productos visualmente atractivos, con un acabado impecable que destaca.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Gallery Section -->
+        <section id="gallery" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Nuestros Productos</h2>
+
+            <!-- Search and Filter -->
+            <div class="mb-8 p-4 bg-white rounded-xl shadow-sm">
+                <input type="text" id="product-filter" placeholder="Buscar productos..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <!-- Products will be generated here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Main Catalogs Menu -->
+        <section id="catalogs-main" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Selecciona un Catálogo</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="#" onclick="showCatalog('empresas')" class="card text-center hover:scale-105 transition-transform">
+                    <img src="https://placehold.co/200x200/4CAF50/fff?text=Empresas" alt="Icono de empresas" class="w-32 h-32 mx-auto mb-4 rounded-full">
+                    <h3 class="font-bold text-xl">Para empresas</h3>
+                    <p class="text-gray-600 mt-2">Soluciones de branding y artículos promocionales.</p>
+                </a>
+                <a href="#" onclick="showCatalog('eventos')" class="card text-center hover:scale-105 transition-transform">
+                    <img src="https://placehold.co/200x200/F44336/fff?text=Eventos" alt="Icono de eventos" class="w-32 h-32 mx-auto mb-4 rounded-full">
+                    <h3 class="font-bold text-xl">Para eventos / fiestas</h3>
+                    <p class="text-gray-600 mt-2">Productos especiales para bodas, XV años, bautizos, etc.</p>
+                </a>
+                <a href="#" onclick="showCatalog('graduaciones')" class="card text-center hover:scale-105 transition-transform">
+                    <img src="https://placehold.co/200x200/9C27B0/fff?text=Graduaciones" alt="Icono de graduaciones" class="w-32 h-32 mx-auto mb-4 rounded-full">
+                    <h3 class="font-bold text-xl">Graduaciones / escolares</h3>
+                    <p class="text-gray-600 mt-2">Recuerdos y artículos para celebrar el éxito académico.</p>
+                </a>
+                <a href="#" onclick="showCatalog('temporalidad')" class="card text-center hover:scale-105 transition-transform">
+                    <img src="https://placehold.co/200x200/FF9800/fff?text=Temporalidad" alt="Icono de temporalidad" class="w-32 h-32 mx-auto mb-4 rounded-full">
+                    <h3 class="font-bold text-xl">Temporalidad</h3>
+                    <p class="text-gray-600 mt-2">Productos temáticos para Navidad, San Valentín, Día del Padre, etc.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Specific Catalogs Section -->
+        <section id="catalogs" class="section">
+            <a href="#" onclick="showSection('catalogs-main')" class="text-blue-600 hover:underline mb-4 inline-block font-semibold">
+                &lt; Regresar a Catálogos
+            </a>
+            <h2 id="catalog-title" class="text-3xl font-bold text-center mb-8"></h2>
+            <div id="catalog-content" class="card max-w-4xl mx-auto p-8 text-center">
+                <!-- Content generated by JS -->
+            </div>
+        </section>
+
+        <!-- Quotation Section -->
+        <section id="quote" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Solicitar Cotización</h2>
+            <div class="card max-w-3xl mx-auto p-8">
+                <p class="mb-6 text-sm text-gray-500">
+                    Por favor, completa los siguientes datos para recibir una cotización detallada. Todos los campos son obligatorios.
+                </p>
+                <form id="quote-form" class="space-y-6">
+                    <!-- Contenedor para los productos de cotización -->
+                    <div id="quote-product-container" class="space-y-4">
+                        <!-- Los campos de producto se agregarán aquí dinámicamente -->
+                    </div>
+                    <button type="button" id="add-quote-product-btn" class="btn-secondary">Agregar otro producto</button>
+
+                    <div>
+                        <label for="quote-name" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                        <input type="text" id="quote-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="quote-business" class="block text-sm font-medium text-gray-700">Razón Social / Nombre</label>
+                        <input type="text" id="quote-business" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="quote-cfdi" class="block text-sm font-medium text-gray-700">Uso CFDI</label>
+                        <input type="text" id="quote-cfdi" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="quote-phone" class="block text-sm font-medium text-gray-700">Número de Contacto</label>
+                        <input type="tel" id="quote-phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="quote-email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                        <input type="email" id="quote-email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="local-pickup-quote" class="rounded text-blue-600 focus:ring-blue-500">
+                        <label for="local-pickup-quote" class="text-sm font-medium text-gray-700">Entrega en Querétaro (Recoger en Tienda)</label>
+                    </div>
+                    <button type="submit" class="btn-primary w-full">Generar Cotización</button>
+                </form>
+
+                <div id="quote-result" class="hidden mt-6 p-6 border-l-4 border-blue-500 bg-blue-50 rounded-lg">
+                    <p class="font-bold text-lg mb-2">Resumen de Cotización</p>
+                    <div class="text-sm space-y-1" id="quote-summary"></div>
+                    <p class="mt-4 text-sm text-gray-600">
+                        *Los precios son estimados. La cotización final se confirma al procesar su pedido.
+                    </p>
+                    <p class="mt-2 text-sm text-blue-800 font-semibold">
+                        Periodo de entrega estimado: <span id="quote-delivery-time"></span>
+                    </p>
+                    <button class="mt-4 btn-secondary" onclick="downloadQuotePDF()">Descargar PDF (Simulado)</button>
+                </div>
+                
+                <p id="quote-message" class="hidden mt-4 text-center text-green-600 font-semibold"></p>
+            </div>
+        </section>
+
+        <!-- Personalization Help Section -->
+        <section id="personalization-help" class="section">
+            <div class="card max-w-4xl mx-auto p-8">
+                <h2 class="text-3xl font-bold text-center mb-6">Guía de Personalización</h2>
+                <p class="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
+                    Para asegurar la mejor calidad en tus productos, te proporcionamos una guía de diseño y plantillas. Sigue estos consejos para un resultado profesional.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Consejos para el Diseño</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li>
+                                <p class="font-semibold text-lg mb-1">Software de Diseño</p>
+                                <p>Recomendamos el uso de programas profesionales como <strong>Adobe Illustrator</strong> o <strong>CorelDRAW</strong>. Son ideales para trabajar con archivos vectoriales y garantizar una impresión nítida.</p>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg mb-1">Modo de Color</p>
+                                <p>Crea tu mesa de trabajo en modo de color <strong>CMYK</strong>. Este es el perfil estándar para impresión y asegura que los colores que ves en pantalla se traduzcan fielmente al producto final.</p>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg mb-1">Resolución y Calidad</p>
+                                <p>Asegúrate de que tu archivo tenga una resolución mínima de <strong>300 dpi (puntos por pulgada)</strong> para evitar imágenes pixeladas o borrosas.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Medidas y Plantillas</h3>
+                        <p class="text-gray-700 mb-4">A continuación, te mostramos las dimensiones de nuestras plantillas por producto. Haz clic en el enlace para descargar la plantilla específica.</p>
+                        <ul class="space-y-4">
+                            <li>
+                                <p class="font-semibold text-lg">Taza 11 Oz / Taza de Vidrio / Taza con Cuchara</p>
+                                <p class="text-sm text-gray-600">Dimensiones: <span class="font-bold text-blue-600">20cm x 9.5cm</span></p>
+                                <a href="#" onclick="downloadTemplates('taza')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Jarra Viajera de Acero</p>
+                                <p class="text-sm text-gray-600">Dimensiones aproximadas: <span class="font-bold text-blue-600">20cm x 15cm</span></p>
+                                <a href="#" onclick="downloadTemplates('jarra')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Lata de Aluminio / Lata de Acero</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('lata')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Botella de 750 ml</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('botella750')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Vaso Cónico con Tapa de Silicón</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('vasoconico')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Taza Cónica 17 Oz.</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('tazaconica')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Jarra Lechera</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('jarralechera')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Tequilero de 2.5 Oz.</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('tequilero')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Rompecabezas de Corazón</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('rompecabezacorazon')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Rompecabezas A4</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('rompecabezasa4')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Rompecabezas 4 piezas</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('rompecabezas4p')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Rompecabezas 6 piezas</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('rompecabezas6p')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Llaveros de MDF</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('llaveros')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Vaso Viajero / Pluma de Aluminio / Taza de Acero</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('varios')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Botella de Aluminio de 600 ml</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('botella600')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                            <li>
+                                <p class="font-semibold text-lg">Vaso de Acero de 450 ml</p>
+                                <p class="text-sm text-gray-600">Descarga la plantilla para el ajuste perfecto.</p>
+                                <a href="#" onclick="downloadTemplates('vasoacero450')" class="text-blue-500 hover:underline text-sm font-medium"><i class="fas fa-download mr-1"></i> Descargar plantilla</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart and Checkout Section -->
+        <section id="cart" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Carrito de Compras</h2>
+            <div class="card p-8">
+                <form id="checkout-form" class="space-y-6">
+                    <div id="cart-items" class="space-y-6">
+                        <!-- Cart items with personalization options will be generated here -->
+                    </div>
+                    <div id="cart-empty" class="text-center text-gray-500">
+                        El carrito está vacío.
+                    </div>
+                    <div id="cart-summary" class="hidden mt-8 pt-4 border-t border-gray-200">
+                        <div class="flex justify-between font-semibold">
+                            <span>Subtotal:</span>
+                            <span id="cart-subtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between font-semibold mt-1">
+                            <span>IVA (16%):</span>
+                            <span id="cart-iva">$0.00</span>
+                        </div>
+                        <div class="flex justify-between font-semibold mt-1">
+                            <span>Envío:</span>
+                            <span id="cart-shipping">$0.00</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-lg mt-4 pt-4 border-t-2 border-gray-300">
+                            <span>Total:</span>
+                            <span id="cart-total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div id="checkout-form-container" class="mt-8 hidden">
+                        <h3 class="text-2xl font-bold mb-4">Información de Envío</h3>
+                        <div class="space-y-4">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Método de Entrega</label>
+                                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="delivery-method" value="local-delivery" checked class="form-radio text-blue-600">
+                                        <span class="ml-2">Envío Local (Querétaro)</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="delivery-method" value="pickup" class="form-radio text-blue-600">
+                                        <span class="ml-2">Recoger en Tienda</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="delivery-method" value="national-delivery" class="form-radio text-blue-600">
+                                        <span class="ml-2">Envío Nacional (Otro estado)</span>
+                                    </label>
+                                </div>
+                                <div class="mt-4 p-4 rounded-md bg-blue-50 border border-blue-200">
+                                    <p class="text-sm text-blue-800">
+                                        <strong id="delivery-time-info"></strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="urgent-delivery" class="rounded text-blue-600 focus:ring-blue-500">
+                                <label for="urgent-delivery" class="text-sm font-medium text-gray-700">Envío Urgente (Costo adicional)</label>
+                            </div>
+                            
+                            <div id="address-fields" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="checkout-name" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                                        <input type="text" id="checkout-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label for="checkout-phone" class="block text-sm font-medium text-gray-700">Número de Teléfono</label>
+                                        <input type="tel" id="checkout-phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="checkout-address" class="block text-sm font-medium text-gray-700">Dirección de Envío Completa</label>
+                                    <textarea id="checkout-address" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary w-full mt-6">Pagar Ahora (Simulado)</button>
+                    </div>
+
+                    <div id="order-confirmation" class="hidden mt-6 p-6 text-center border-l-4 border-green-500 bg-green-50 rounded-lg">
+                        <i class="fas fa-check-circle text-green-600 text-4xl mb-2"></i>
+                        <p class="text-xl font-bold text-green-800">¡Compra Confirmada!</p>
+                        <p class="mt-2 text-sm text-gray-600">Tu orden ha sido procesada con éxito. En breve recibirás un correo electrónico de confirmación.</p>
+                        <p class="mt-1 font-semibold text-sm">Folio de Orden: <span id="order-folio" class="font-bold text-lg"></span></p>
+                        <p class="mt-2 text-sm text-gray-500">Puedes rastrear el estado de tu pedido en la sección de "Seguimiento".</p>
+                    </div>
+                </form>
+
+                <div id="privacy-disclaimer" class="mt-8 p-6 bg-gray-100 rounded-lg text-sm text-gray-600">
+                    <h4 class="font-bold mb-2">Aviso de Privacidad y Seguridad de Datos</h4>
+                    <p>En Printealo QRO., la seguridad de tus datos es nuestra máxima prioridad. La información personal y bancaria que nos proporcionas se maneja de manera estrictamente confidencial y se protege con tecnologías de cifrado avanzadas. Nunca almacenamos directamente tu información de pago. Al realizar una transacción, tus datos son procesados de forma segura a través de pasarelas de pago certificadas. Para la gestión de cotizaciones, los datos de contacto se utilizan únicamente para procesar y dar seguimiento a tu solicitud. Al usar nuestro sitio, aceptas nuestro compromiso de proteger tu información y no compartirla con terceros.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracking Section -->
+        <section id="tracking" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Rastreo de Pedido</h2>
+            <div class="card max-w-2xl mx-auto p-8">
+                <form id="tracking-form" class="flex items-center space-x-4">
+                    <input type="text" id="tracking-folio" placeholder="Ingresa tu Folio de Orden" required class="flex-grow p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="btn-primary px-8">Rastrear</button>
+                </form>
+
+                <div id="tracking-result" class="hidden mt-8">
+                    <h3 class="text-2xl font-bold mb-4">Estado del Pedido: <span id="tracking-status-text"></span></h3>
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between text-xs">
+                            <span class="text-green-600">Pagado</span>
+                            <span class="text-green-600">Personalizando</span>
+                            <span class="text-green-600">Creado</span>
+                            <span class="text-green-600">Enviado</span>
+                            <span class="text-green-600">Entregado</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div id="step-1" class="w-1/4 py-1 rounded-full text-center">
+                                <div class="bg-green-600 h-2 rounded-full w-full"></div>
+                                <span class="step-label text-xs mt-1 block"></span>
+                            </div>
+                            <div id="step-2" class="w-1/4 py-1 rounded-full text-center">
+                                <div class="bg-gray-200 h-2 rounded-full w-full"></div>
+                                <span class="step-label text-xs mt-1 block"></span>
+                            </div>
+                            <div id="step-3" class="w-1/4 py-1 rounded-full text-center">
+                                <div class="bg-gray-200 h-2 rounded-full w-full"></div>
+                                <span class="step-label text-xs mt-1 block"></span>
+                            </div>
+                            <div id="step-4" class="w-1/4 py-1 rounded-full text-center">
+                                <div class="bg-gray-200 h-2 rounded-full w-full"></div>
+                                <span class="step-label text-xs mt-1 block"></span>
+                            </div>
+                            <div id="step-5" class="w-1/4 py-1 rounded-full text-center">
+                                <div class="bg-gray-200 h-2 rounded-full w-full"></div>
+                                <span class="step-label text-xs mt-1 block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tracking-details" class="mt-6 p-4 rounded-lg bg-gray-50 border border-gray-200 hidden">
+                        <p class="font-bold text-gray-700">Detalles del Envío:</p>
+                        <p id="tracking-number-info" class="mt-2 text-sm text-gray-600"></p>
+                    </div>
+                </div>
+
+                <p id="tracking-message" class="hidden mt-4 text-center text-red-600 font-semibold"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Data de productos simulada. En un sistema real, esta información vendría de una base de datos.
+        const products = [
+            { id: 1, name: "Taza Mágica", description: "La taza que cambia de color con la temperatura.", price: 150, image: "https://placehold.co/400x400/FF5733/fff?text=Taza+Mágica" },
+            { id: 2, name: "Termo Personalizado", description: "Termo de acero inoxidable con tu diseño favorito.", price: 250, image: "https://placehold.co/400x400/3498db/fff?text=Termo" },
+            { id: 3, name: "Playera Full Print", description: "Playera 100% poliéster, sublimada con tu diseño.", price: 280, image: "https://placehold.co/400x400/9b59b6/fff?text=Playera" },
+            { id: 4, name: "Gorra Tipo Trucker", description: "Gorra con frente de poliéster y malla, ideal para sublimar.", price: 120, image: "https://placehold.co/400x400/2ecc71/fff?text=Gorra" },
+            { id: 5, name: "Llavero de Acrílico", description: "Llavero personalizado con corte láser y grabado.", price: 35, image: "https://placehold.co/400x400/e67e22/fff?text=Llavero" },
+            { id: 6, name: "Tarjetas de Presentación", description: "Paquete de 100 tarjetas, impresión a todo color.", price: 300, image: "https://placehold.co/400x400/f1c40f/fff?text=Tarjetas" },
+            { id: 7, name: "Póster Fotográfico", description: "Póster en papel de alta calidad, ideal para decorar.", price: 100, image: "https://placehold.co/400x400/e74c3c/fff?text=Póster" },
+            { id: 8, name: "Cojín Decorativo", description: "Cojín con relleno y funda sublimada.", price: 220, image: "https://placehold.co/400x400/1abc9c/fff?text=Cojín" },
+            { id: 9, name: "Sudadera Impresa", description: "Sudadera de algodón con impresión en serigrafía.", price: 450, image: "https://placehold.co/400x400/34495e/fff?text=Sudadera" },
+            { id: 10, name: "Tote Bag de Lona", description: "Bolsa de tela de lona ideal para compras.", price: 90, image: "https://placehold.co/400x400/95a5a6/fff?text=Tote+Bag" },
+            { id: 11, name: "Pulseras de Tela", description: "Pulseras personalizadas con tu logo.", price: 25, image: "https://placehold.co/400x400/7f8c8d/fff?text=Pulseras" },
+            { id: 12, name: "Stickers Troquelados", description: "Paquete de 100 stickers con corte personalizado.", price: 80, image: "https://placehold.co/400x400/d35400/fff?text=Stickers" },
+            { id: 13, name: "Calendario de Escritorio", description: "Calendario de 12 meses con fotos personalizadas.", price: 180, image: "https://placehold.co/400x400/8e44ad/fff?text=Calendario" },
+            { id: 14, name: "Libreta Pasta Dura", description: "Libreta con portada personalizada y 80 hojas.", price: 110, image: "https://placehold.co/400x400/2980b9/fff?text=Libreta" },
+            { id: 15, name: "Rompecabezas Personalizado", description: "Rompecabezas de 120 piezas con tu foto.", price: 175, image: "https://placehold.co/400x400/c0392b/fff?text=Rompecabezas" }
+        ];
+
+        const catalogsData = {
+            'empresas': {
+                title: 'Catálogo para Empresas',
+                content: `<p class="text-lg text-gray-600 mb-6">Ofrecemos soluciones de branding para tu negocio. Desde uniformes personalizados hasta artículos promocionales. Contamos con una amplia variedad de productos para reforzar la identidad de tu marca.</p>
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                              <img src="https://placehold.co/400x400/4CAF50/fff?text=Uniformes" alt="Uniformes de empresa" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/FFC107/fff?text=Artículos+Promocionales" alt="Artículos promocionales" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/2196F3/fff?text=Material+de+Oficina" alt="Material de oficina" class="rounded-lg shadow-md w-full">
+                          </div>`
+            },
+            'eventos': {
+                title: 'Catálogo para Eventos y Fiestas',
+                content: `<p class="text-lg text-gray-600 mb-6">Dale un toque único a tus celebraciones. Contamos con una gran variedad de productos para bodas, quince años, bautizos, baby showers y más.</p>
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                              <img src="https://placehold.co/400x400/F44336/fff?text=Bodas" alt="Productos para bodas" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/E91E63/fff?text=XV+Años" alt="Productos para XV años" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/9C27B0/fff?text=Bautizos" alt="Productos para bautizos" class="rounded-lg shadow-md w-full">
+                          </div>`
+            },
+            'graduaciones': {
+                title: 'Catálogo para Graduaciones y Escolares',
+                content: `<p class="text-lg text-gray-600 mb-6">Celebra el éxito académico con productos personalizados. Ideal para escuelas, universidades y generaciones que buscan un recuerdo memorable.</p>
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                              <img src="https://placehold.co/400x400/673AB7/fff?text=Sudaderas" alt="Sudaderas de graduación" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/3F51B5/fff?text=Anuarios" alt="Anuarios personalizados" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/03A9F4/fff?text=Termos" alt="Termos para graduación" class="rounded-lg shadow-md w-full">
+                          </div>`
+            },
+            'temporalidad': {
+                title: 'Catálogo de Temporalidad',
+                content: `<p class="text-lg text-gray-600 mb-6">Productos especiales para cada temporada y fecha importante. Sorprende con regalos únicos en Navidad, San Valentín, Día del Padre, Día de la Madre y más.</p>
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                              <img src="https://placehold.co/400x400/FF9800/fff?text=Navidad" alt="Productos de Navidad" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/FF5722/fff?text=San+Valentín" alt="Productos de San Valentín" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/8BC34A/fff?text=Día+del+Padre" alt="Productos para el Día del Padre" class="rounded-lg shadow-md w-full">
+                              <img src="https://placehold.co/400x400/E57373/fff?text=Día+de+la+Madre" alt="Productos para el Día de la Madre" class="rounded-lg shadow-md w-full">
+                          </div>`
+            }
+        };
+
+        // Costos de envío y tasas
+        const IVA_RATE = 0.16;
+        const SHIPPING_COSTS = {
+            'local-delivery': 120, // Querétaro, vía paquetería
+            'national-delivery': 250, // Nacional, otro estado
+            'pickup': 0, // Recoger en tienda
+            'urgent': 100 // Costo adicional por urgencia
+        };
+
+        // Pedidos simulados para el rastreador
+        let simulatedOrders = [];
+        let cart = [];
+
+        // Estados del pedido
+        const statuses = ['Pagado', 'En Proceso de Personalización', 'Creado', 'Enviado', 'Finalizado'];
+
+        // Navegación entre secciones
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+            if (sectionId === 'cart') {
+                renderCart();
+            } else if (sectionId === 'quote') {
+                const productContainer = document.getElementById('quote-product-container');
+                if (productContainer.children.length === 0) {
+                    addQuoteProductRow();
+                }
+            }
+        }
+        
+        // Mostrar contenido del catálogo específico
+        function showCatalog(catalogName) {
+            const catalog = catalogsData[catalogName];
+            if (catalog) {
+                document.getElementById('catalog-title').textContent = catalog.title;
+                document.getElementById('catalog-content').innerHTML = catalog.content;
+                showSection('catalogs');
+            }
+        }
+
+        // Renderizar la galería de productos
+        function renderProducts(filterText = '') {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = '';
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('card', 'flex', 'flex-col', 'items-center', 'text-center', 'transition-transform', 'hover:scale-105');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover mb-4 rounded-lg">
+                    <h3 class="text-xl font-semibold">${product.name}</h3>
+                    <p class="text-gray-600 my-2">${product.description}</p>
+                    <p class="text-2xl font-bold text-blue-600">$${product.price.toFixed(2)}</p>
+                    <button class="btn-primary mt-4" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        // Filtro de productos en tiempo real
+        document.getElementById('product-filter').addEventListener('input', (e) => {
+            renderProducts(e.target.value);
+        });
+
+        // Agregar producto al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1, personalizationFile: null, instructions: "" });
+            }
+            updateCartCount();
+        }
+
+        // Actualizar el contador del carrito
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        // Renderizar el carrito de compras
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartEmptyMessage = document.getElementById('cart-empty');
+            const cartSummary = document.getElementById('cart-summary');
+            const checkoutFormContainer = document.getElementById('checkout-form-container');
+            
+            cartItemsContainer.innerHTML = '';
+            let currentShippingCost = getShippingCost();
+
+            if (cart.length === 0) {
+                cartEmptyMessage.classList.remove('hidden');
+                cartSummary.classList.add('hidden');
+                checkoutFormContainer.classList.add('hidden');
+                return;
+            }
+
+            cartEmptyMessage.classList.add('hidden');
+            cartSummary.classList.remove('hidden');
+            checkoutFormContainer.classList.remove('hidden');
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                const cartItemElement = document.createElement('div');
+                cartItemElement.classList.add('flex', 'flex-col', 'gap-4', 'pb-6', 'mb-6', 'border-b', 'border-gray-200', 'last:border-b-0', 'last:mb-0', 'last:pb-0');
+                cartItemElement.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4">
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-md object-cover">
+                            <div>
+                                <p class="font-semibold text-lg">${item.name}</p>
+                                <p class="text-sm text-gray-500">$${item.price.toFixed(2)} c/u</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <input type="number" min="1" value="${item.quantity}" class="w-16 p-2 rounded-md border text-center" onchange="updateCartQuantity(${item.id}, this.value)">
+                            <p class="font-bold text-lg">$${itemTotal.toFixed(2)}</p>
+                            <button type="button" onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 transition-colors"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="space-y-4 md:pl-20">
+                        <div>
+                            <label for="personalization-file-${item.id}" class="block text-sm font-medium text-gray-700">Archivo para Personalización</label>
+                            <input type="file" id="personalization-file-${item.id}" class="mt-1 block w-full text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div>
+                            <label for="personalization-instructions-${item.id}" class="block text-sm font-medium text-gray-700">Instrucciones Adicionales</label>
+                            <textarea id="personalization-instructions-${item.id}" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+
+            const iva = subtotal * IVA_RATE;
+            const total = subtotal + iva + currentShippingCost;
+            document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cart-iva').textContent = `$${iva.toFixed(2)}`;
+            document.getElementById('cart-shipping').textContent = `$${currentShippingCost.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Obtener el costo de envío actual
+        function getShippingCost() {
+            const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked')?.value || 'local-delivery';
+            const isUrgent = document.getElementById('urgent-delivery')?.checked;
+            let cost = SHIPPING_COSTS[deliveryMethod];
+
+            // Si es urgente, añadir el costo adicional, a menos que sea Recoger en Tienda
+            if (isUrgent && deliveryMethod !== 'pickup') {
+                cost += SHIPPING_COSTS['urgent'];
+            }
+            return cost;
+        }
+
+        // Actualizar la información de entrega y el total del carrito
+        function updateCartShippingInfo() {
+            const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked')?.value;
+            const deliveryTimeElement = document.getElementById('delivery-time-info');
+            const addressFields = document.getElementById('address-fields');
+            
+            let timeInfo = '';
+            if (deliveryMethod === 'local-delivery') {
+                timeInfo = 'Periodo de entrega estimado: 3 a 5 días hábiles. Envío local en Querétaro.';
+                addressFields.classList.remove('hidden');
+            } else if (deliveryMethod === 'national-delivery') {
+                timeInfo = 'Periodo de entrega estimado: 3 a 15 días hábiles. Envío a otro estado.';
+                addressFields.classList.remove('hidden');
+            } else if (deliveryMethod === 'pickup') {
+                timeInfo = 'Recolección en la dirección de la empresa. El producto estará listo para ser recogido 8 días hábiles después de realizar el pago.';
+                addressFields.classList.add('hidden');
+            }
+
+            deliveryTimeElement.textContent = timeInfo;
+            renderCart();
+        }
+
+        // Actualizar cantidad de un item en el carrito
+        function updateCartQuantity(productId, quantity) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = parseInt(quantity);
+                renderCart();
+            }
+        }
+
+        // Eliminar un item del carrito
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            renderCart();
+        }
+
+        // Llenar el select de productos en el formulario de cotización
+        function populateQuoteProducts() {
+            const selectElements = document.querySelectorAll('.quote-product-select');
+            selectElements.forEach(select => {
+                select.innerHTML = '<option value="">Selecciona un producto</option>';
+                products.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.textContent = product.name;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        // Función para agregar un nuevo conjunto de campos de producto y cantidad
+        function addQuoteProductRow() {
+            const container = document.getElementById('quote-product-container');
+            const newRow = document.createElement('div');
+            newRow.classList.add('flex', 'flex-col', 'sm:flex-row', 'items-end', 'gap-4', 'pb-4', 'border-b', 'border-gray-200');
+            newRow.innerHTML = `
+                <div class="flex-grow">
+                    <label class="block text-sm font-medium text-gray-700">Producto</label>
+                    <select required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm quote-product-select">
+                        <!-- Options filled by JS -->
+                    </select>
+                </div>
+                <div class="w-32">
+                    <label class="block text-sm font-medium text-gray-700">Cantidad</label>
+                    <input type="number" min="1" value="1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm quote-quantity-input">
+                </div>
+                <button type="button" class="text-red-500 hover:text-red-700 transition-colors" onclick="this.parentNode.remove()">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            container.appendChild(newRow);
+            populateQuoteProducts(); // Volver a llenar los selects
+        }
+        
+        // Manejar la simulación de cotización
+        document.getElementById('quote-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const productRows = document.querySelectorAll('#quote-product-container > div');
+            if (productRows.length === 0) {
+                const quoteMessage = document.getElementById('quote-message');
+                quoteMessage.textContent = 'Por favor, agrega al menos un producto para cotizar.';
+                quoteMessage.classList.remove('hidden', 'text-green-600');
+                quoteMessage.classList.add('text-red-600');
+                setTimeout(() => { quoteMessage.classList.add('hidden'); }, 3000);
+                return;
+            }
+
+            let subtotal = 0;
+            let productsQuoted = [];
+            let currentShippingCost = document.getElementById('local-pickup-quote').checked ? 0 : SHIPPING_COSTS['local-delivery'];
+
+            productRows.forEach(row => {
+                const productId = parseInt(row.querySelector('.quote-product-select').value);
+                const quantity = parseInt(row.querySelector('.quote-quantity-input').value);
+                const product = products.find(p => p.id === productId);
+
+                if (product && quantity > 0) {
+                    const itemTotal = product.price * quantity;
+                    subtotal += itemTotal;
+                    productsQuoted.push({ name: product.name, quantity: quantity, total: itemTotal });
+                }
+            });
+
+            const iva = subtotal * IVA_RATE;
+            const total = subtotal + iva + currentShippingCost;
+
+            const quoteSummary = document.getElementById('quote-summary');
+            quoteSummary.innerHTML = '';
+            productsQuoted.forEach(item => {
+                quoteSummary.innerHTML += `<p><strong>${item.name}</strong> (Cantidad: ${item.quantity}) - $${item.total.toFixed(2)}</p>`;
+            });
+            quoteSummary.innerHTML += `
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <p><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</p>
+                    <p><strong>IVA (16%):</strong> $${iva.toFixed(2)}</p>
+                    <p><strong>Envío (estimado):</strong> $${currentShippingCost.toFixed(2)}</p>
+                    <p class="font-bold text-lg"><strong>Total estimado:</strong> $${total.toFixed(2)}</p>
+                </div>
+            `;
+            document.getElementById('quote-result').classList.remove('hidden');
+            document.getElementById('quote-delivery-time').textContent = document.getElementById('local-pickup-quote').checked ? '8 días hábiles (Recoger en tienda)' : '8 días hábiles después de realizar el pago';
+
+            const email = document.getElementById('quote-email').value;
+            const quoteMessage = document.getElementById('quote-message');
+            quoteMessage.textContent = `¡Gracias por tu interés! Hemos enviado tu cotización a ${email}. Esperamos seguir pronto con el proceso de personalización.`;
+            quoteMessage.classList.remove('hidden', 'text-red-600');
+            quoteMessage.classList.add('text-green-600');
+        });
+
+        // Simular la descarga de un PDF de cotización
+        function downloadQuotePDF() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center max-w-sm mx-auto">
+                    <h4 class="font-bold text-lg mb-4">Descarga de PDF</h4>
+                    <p class="text-gray-600 mb-6">La descarga del PDF de cotización es una función simulada. Un archivo real se generaría en un servidor.</p>
+                    <button class="btn-primary" onclick="this.closest('.fixed').remove()">Cerrar</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Manejar la simulación de checkout
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const folio = 'PRN-' + Date.now().toString().slice(-6);
+            
+            simulatedOrders.push({
+                folio: folio,
+                status: 'Pagado',
+                trackingNumber: null
+            });
+
+            document.getElementById('checkout-form-container').classList.add('hidden');
+            document.getElementById('order-folio').textContent = folio;
+            document.getElementById('order-confirmation').classList.remove('hidden');
+            
+            cart = [];
+            updateCartCount();
+
+            // Simular avance de estado del pedido
+            setTimeout(() => updateOrderStatus(folio, 'En Proceso de Personalización'), 3000);
+            setTimeout(() => updateOrderStatus(folio, 'Creado'), 6000);
+            setTimeout(() => updateOrderStatus(folio, 'Enviado'), 9000);
+        });
+
+        // Actualizar estado de una orden simulada
+        function updateOrderStatus(folio, newStatus) {
+            const order = simulatedOrders.find(o => o.folio === folio);
+            if (order) {
+                order.status = newStatus;
+                if (newStatus === 'Enviado') {
+                    const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked')?.value;
+                    if (deliveryMethod !== 'pickup') {
+                        order.trackingNumber = `TRACK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+                    }
+                }
+                console.log(`Order ${folio} status updated to: ${newStatus}`);
+            }
+        }
+
+        // Simular descarga de plantillas
+        function downloadTemplates(productName) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center max-w-sm mx-auto">
+                    <h4 class="font-bold text-lg mb-4">Descarga de Plantilla</h4>
+                    <p class="text-gray-600 mb-6">La descarga de la plantilla para "${productName}" es una función simulada. Un archivo real se generaría en un servidor.</p>
+                    <button class="btn-primary" onclick="this.closest('.fixed').remove()">Cerrar</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Manejar el rastreo de pedido
+        document.getElementById('tracking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const folio = document.getElementById('tracking-folio').value.trim();
+            const resultDiv = document.getElementById('tracking-result');
+            const messageDiv = document.getElementById('tracking-message');
+            
+            const order = simulatedOrders.find(o => o.folio.toLowerCase() === folio.toLowerCase());
+
+            messageDiv.classList.add('hidden');
+            resultDiv.classList.add('hidden');
+
+            if (!order) {
+                messageDiv.textContent = 'El folio de orden no fue encontrado. Por favor, verifica el número.';
+                messageDiv.classList.remove('hidden', 'text-green-600');
+                messageDiv.classList.add('text-red-600');
+                return;
+            }
+
+            resultDiv.classList.remove('hidden');
+            document.getElementById('tracking-status-text').textContent = order.status;
+
+            const trackingNumberInfo = document.getElementById('tracking-number-info');
+            const trackingDetailsDiv = document.getElementById('tracking-details');
+            trackingDetailsDiv.classList.add('hidden');
+
+            // Reset step UI
+            document.querySelectorAll('#tracking-result .h-2').forEach(el => el.classList.remove('bg-blue-600', 'bg-green-600'));
+            
+            // Update steps based on status
+            let currentIndex = statuses.indexOf(order.status);
+            statuses.forEach((status, index) => {
+                const stepBar = document.getElementById(`step-${index + 1}`).querySelector('.h-2');
+                if (index < currentIndex) {
+                    stepBar.classList.add('bg-green-600');
+                } else if (index === currentIndex) {
+                    stepBar.classList.add('bg-blue-600');
+                }
+            });
+
+            if (order.status === 'Enviado') {
+                trackingNumberInfo.innerHTML = `<strong>Número de guía:</strong> ${order.trackingNumber}`;
+                trackingDetailsDiv.classList.remove('hidden');
+            } else if (order.status === 'Finalizado') {
+                trackingNumberInfo.innerHTML = 'Su pedido ha sido entregado exitosamente.';
+                trackingDetailsDiv.classList.remove('hidden');
+            }
+        });
+
+        // Inicializar la página
+        window.onload = function() {
+            renderProducts();
+            addQuoteProductRow(); // Agregar el primer campo de producto al cargar la página
+            document.getElementById('add-quote-product-btn').addEventListener('click', addQuoteProductRow);
+
+            // Event listeners para los cambios de método de envío
+            document.querySelectorAll('input[name="delivery-method"]').forEach(radio => {
+                radio.addEventListener('change', updateCartShippingInfo);
+            });
+            document.getElementById('urgent-delivery').addEventListener('change', updateCartShippingInfo);
+            updateCartShippingInfo();
+        };
+    </script>
+
+</body>
+</html>
